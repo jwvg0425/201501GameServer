@@ -15,7 +15,7 @@ public:
 	bool StartIoThreads();
 	bool StartAcceptLoop();
 
-	HANDLE GetComletionPort()	{ return mCompletionPort; }
+	HANDLE GetCompletionPort()	{ return mCompletionPort; }
 	int	GetIoThreadCount()		{ return mIoThreadCount;  }
 
 

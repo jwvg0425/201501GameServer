@@ -138,7 +138,7 @@ unsigned int WINAPI IocpManager::IoWorkerThread(LPVOID lpParam)
 	LThreadType = THREAD_IO_WORKER;
 
 	LIoThreadId = reinterpret_cast<int>(lpParam);
-	HANDLE hCompletionPort = GIocpManager->GetComletionPort();
+	HANDLE hCompletionPort = GIocpManager->GetCompletionPort();
 
 	while (true)
 	{
@@ -146,7 +146,7 @@ unsigned int WINAPI IocpManager::IoWorkerThread(LPVOID lpParam)
 		OverlappedIOContext* context = nullptr;
 		ClientSession* asCompletionKey = nullptr;
 
-		int ret = GetQueuedCompletionStatus(hCompletionPort, &dwTransferred, (PULONG_PTR)&asCompletionKey, (LPOVERLAPPED*)&context, GQCS_TIMEOUT); ///<여기에는 GetQueuedCompletionStatus(hComletionPort, ..., GQCS_TIMEOUT)를 수행한 결과값을 대입
+		int ret = GetQueuedCompletionStatus(hCompletionPort, &dwTransferred, (PULONG_PTR)&asCompletionKey, (LPOVERLAPPED*)&context, GQCS_TIMEOUT);
 
 		/// check time out first 
 		if (ret == 0 && GetLastError()==WAIT_TIMEOUT)

@@ -26,8 +26,8 @@ bool ClientSession::OnConnect(SOCKADDR_IN* addr)
 		return false;
 	}
 	
-	HANDLE handle = CreateIoCompletionPort((HANDLE)mSocket, GIocpManager->GetComletionPort(), (ULONG_PTR)this, 0);
-	if (handle != GIocpManager->GetComletionPort())
+	HANDLE handle = CreateIoCompletionPort((HANDLE)mSocket, GIocpManager->GetCompletionPort(), (ULONG_PTR)this, 0);
+	if (handle != GIocpManager->GetCompletionPort())
 	{
 		printf_s("[DEBUG] CreateIoCompletionPort error: %d\n", GetLastError());
 		return false;
