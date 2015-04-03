@@ -23,7 +23,7 @@ bool IocpManager::Initialize()
 	SYSTEM_INFO systemInfo = { 0, };
 	GetSystemInfo(&systemInfo);
 
-	//일반적으로 스레드 개수는 프로세서 개수의 2배라고 함.
+	//일반적으로 스레드 개수는 프로세서 개수의 2배라고 함. ///< 왜? 일반적이지는 않지만 보통 그렇게하는 이유는 있음
 	mIoThreadCount = systemInfo.dwNumberOfProcessors * 2;
 
 	/// winsock initializing
@@ -162,7 +162,7 @@ unsigned int WINAPI IocpManager::IoWorkerThread(LPVOID lpParam)
 
 		if (context == nullptr)
 		{
-			//연결 끊기
+			//연결 끊기 ///< 끊으면 안된다. continue처리가 맞음. 스터디해봐서 알겠지만 PQCS로 넘어오는 애들도 있다.
 			asCompletionKey->Disconnect(DR_RECV_ZERO);
 			GSessionManager->DeleteClientSession(asCompletionKey);
 		}
@@ -197,7 +197,8 @@ unsigned int WINAPI IocpManager::IoWorkerThread(LPVOID lpParam)
 
 bool IocpManager::ReceiveCompletion(const ClientSession* client, OverlappedIOContext* context, DWORD dwTransferred)
 {
-	if (client == nullptr)
+
+	if (client == nullptr) ///<이거 체크할 필요 있을까?
 	{
 		delete context;
 		return false;
@@ -216,7 +217,7 @@ bool IocpManager::ReceiveCompletion(const ClientSession* client, OverlappedIOCon
 
 bool IocpManager::SendCompletion(const ClientSession* client, OverlappedIOContext* context, DWORD dwTransferred)
 {
-	if (client == nullptr)
+	if (client == nullptr) ///< 꼭 할필요가 있을까?
 	{
 		delete context;
 		return false;

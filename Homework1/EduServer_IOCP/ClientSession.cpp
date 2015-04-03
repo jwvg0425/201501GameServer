@@ -80,7 +80,17 @@ bool ClientSession::PostRecv() const
 	recvContext->mWsaBuf.buf = recvContext->mBuffer;
 	recvContext->mWsaBuf.len = BUFSIZE;
 
-	WSARecv(mSocket, &recvContext->mWsaBuf, 1, nullptr, &flags, &recvContext->mOverlapped, nullptr);
+	//WSARecv(mSocket, &recvContext->mWsaBuf, 1, nullptr, &flags, &recvContext->mOverlapped, nullptr);
+
+	/// 이렇게.. 에러처리 꼭 해야 함.
+
+	DWORD recvbytes = 0;
+	if (SOCKET_ERROR == WSARecv(mSocket, &recvContext->mWsaBuf, 1, &recvbytes, &flags, (LPWSAOVERLAPPED)recvContext, NULL))
+	{
+		if (WSAGetLastError() != WSA_IO_PENDING)
+			return false;
+	}
+
 
 
 	return true;
@@ -99,8 +109,16 @@ bool ClientSession::PostSend(const char* buf, int len) const
 	sendContext->mWsaBuf.buf = sendContext->mBuffer;
 	sendContext->mWsaBuf.len = len;
 
-	WSASend(mSocket, &sendContext->mWsaBuf, 1, nullptr, 0, &sendContext->mOverlapped, nullptr);
+	//WSASend(mSocket, &sendContext->mWsaBuf, 1, nullptr, 0, &sendContext->mOverlapped, nullptr);
 
+	/// 이렇게 start async send
+	DWORD sendbytes = 0;
+	DWORD flags = 0;
+	if (SOCKET_ERROR == WSASend(mSocket, &sendContext->mWsaBuf, 1, &sendbytes, flags, (LPWSAOVERLAPPED)sendContext, NULL))
+	{
+		if (WSAGetLastError() != WSA_IO_PENDING)
+			return false;
+	}
 
 	return true;
 }
