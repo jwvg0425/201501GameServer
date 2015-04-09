@@ -5,6 +5,7 @@
 #include "IocpManager.h"
 #include "SessionManager.h"
 
+char acceptBuffer[128];
 
 OverlappedIOContext::OverlappedIOContext(ClientSession* owner, IOType ioType) 
 : mSessionObject(owner), mIoType(ioType)
@@ -41,7 +42,7 @@ void ClientSession::SessionReset()
 
 	//DisconnectEx를 이용하면 socket 재활용이 가능하다고 적혀있었는데.. 어떻게 하는 건지도 모르겠고 왜 재활용하지 않는지도 잘 모르겠다.
 	///# 빙고! 소켓을 재활용 하면 된다. setsockopt로 REUSE하고 사용하면 됨. 한번 해보길..
-	
+
 	closesocket(mSocket);
 
 	///# 근데, 여기에서는 왜 재활용 안하고 새로 소캣을 생성했을까? (힌트는 TCP 이론 과제에서 다루었던 주제 때문에 번거로운 점이 있기 떄문)
@@ -57,8 +58,6 @@ bool ClientSession::PostAccept()
 	DWORD recvBytes = 0;
 	acceptContext->mWsaBuf.buf = nullptr;
 	acceptContext->mWsaBuf.len = 0;
-	//accept할 때 그냥 넘기기 위한 버퍼. 어차피 아무것도 안 쓰니까 지역변수로 뒀는데.. 이래도 괜찮으려나? 일단 문제 없이 돌아가긴 하는데..
-	char acceptBuffer[128]; ///# 전역버퍼나 IocpManager에 이거 전용 더미 버퍼 하나 만들어두고 쓰도록..
 
 	if (false == MyAcceptEx(*GIocpManager->GetListenSocket(), mSocket,
 		acceptBuffer, 0, sizeof (SOCKADDR_IN)+16, sizeof (SOCKADDR_IN)+16,

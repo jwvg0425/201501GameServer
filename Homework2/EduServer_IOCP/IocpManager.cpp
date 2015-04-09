@@ -89,15 +89,15 @@ bool IocpManager::Initialize()
 
 	DWORD dwBytes;
 	if (SOCKET_ERROR == WSAIoctl(mListenSocket, SIO_GET_EXTENSION_FUNCTION_POINTER,
-		&GuidAcceptEx, sizeof(GuidAcceptEx), &lpfnAcceptEx, sizeof(lpfnAcceptEx), ///# sizeof에는 배열이 아닌 이상 타입을 해주도록..
+		&GuidAcceptEx, sizeof(GUID), &lpfnAcceptEx, sizeof(LPFN_ACCEPTEX), ///# sizeof에는 배열이 아닌 이상 타입을 해주도록..
 		&dwBytes, nullptr, nullptr))
 	{
 		return false;
 	}
 
 	if (SOCKET_ERROR == WSAIoctl(mListenSocket, SIO_GET_EXTENSION_FUNCTION_POINTER,
-		&GuidDisconnectEx, sizeof(GuidDisconnectEx),
-		&lpfnDisconnectEx, sizeof(lpfnDisconnectEx),
+		&GuidDisconnectEx, sizeof(GUID),
+		&lpfnDisconnectEx, sizeof(LPFN_DISCONNECTEX),
 		&dwBytes, nullptr, nullptr))
 	{
 		return false;
