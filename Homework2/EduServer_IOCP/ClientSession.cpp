@@ -40,8 +40,11 @@ void ClientSession::SessionReset()
 	}
 
 	//DisconnectEx를 이용하면 socket 재활용이 가능하다고 적혀있었는데.. 어떻게 하는 건지도 모르겠고 왜 재활용하지 않는지도 잘 모르겠다.
+	///# 빙고! 소켓을 재활용 하면 된다. setsockopt로 REUSE하고 사용하면 됨. 한번 해보길..
+	
 	closesocket(mSocket);
 
+	///# 근데, 여기에서는 왜 재활용 안하고 새로 소캣을 생성했을까? (힌트는 TCP 이론 과제에서 다루었던 주제 때문에 번거로운 점이 있기 떄문)
 	mSocket = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 }
 
@@ -55,7 +58,7 @@ bool ClientSession::PostAccept()
 	acceptContext->mWsaBuf.buf = nullptr;
 	acceptContext->mWsaBuf.len = 0;
 	//accept할 때 그냥 넘기기 위한 버퍼. 어차피 아무것도 안 쓰니까 지역변수로 뒀는데.. 이래도 괜찮으려나? 일단 문제 없이 돌아가긴 하는데..
-	char acceptBuffer[128];
+	char acceptBuffer[128]; ///# 전역버퍼나 IocpManager에 이거 전용 더미 버퍼 하나 만들어두고 쓰도록..
 
 	if (false == MyAcceptEx(*GIocpManager->GetListenSocket(), mSocket,
 		acceptBuffer, 0, sizeof (SOCKADDR_IN)+16, sizeof (SOCKADDR_IN)+16,
@@ -64,6 +67,8 @@ bool ClientSession::PostAccept()
 		int error = WSAGetLastError();
 		if (error != ERROR_IO_PENDING)
 		{
+			DeleteIoContext(acceptContext); ///# 이렇게 지워줘야지
+
 			printf("[DEBUG] AcceptEx Error. error code : %d\n", error);
 			return false;
 		}
@@ -156,8 +161,16 @@ void ClientSession::DisconnectRequest(DisconnectReason dr)
 
 	if (false == DisconnectEx(mSocket, (LPOVERLAPPED)context, TF_REUSE_SOCKET, 0))
 	{
-		int error = WSAGetLastError();
-		CRASH_ASSERT(error == ERROR_IO_PENDING);
+		//int error = WSAGetLastError();
+		//CRASH_ASSERT(error == ERROR_IO_PENDING);
+
+		if (WSAGetLastError() != WSA_IO_PENDING)
+		{
+			///# 실패하면 컨텍스트는 지워줘야지..
+			DeleteIoContext(context);
+			printf_s("ClientSession::DisconnectRequest Error : %d\n", GetLastError());
+		}
+
 	}
 }
 

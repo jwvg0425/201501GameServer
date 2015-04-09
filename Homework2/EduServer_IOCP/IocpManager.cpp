@@ -89,7 +89,7 @@ bool IocpManager::Initialize()
 
 	DWORD dwBytes;
 	if (SOCKET_ERROR == WSAIoctl(mListenSocket, SIO_GET_EXTENSION_FUNCTION_POINTER,
-		&GuidAcceptEx, sizeof(GuidAcceptEx), &lpfnAcceptEx, sizeof(lpfnAcceptEx),
+		&GuidAcceptEx, sizeof(GuidAcceptEx), &lpfnAcceptEx, sizeof(lpfnAcceptEx), ///# sizeof에는 배열이 아닌 이상 타입을 해주도록..
 		&dwBytes, nullptr, nullptr))
 	{
 		return false;
@@ -248,7 +248,7 @@ bool IocpManager::ReceiveCompletion(ClientSession* client, OverlappedRecvContext
 	client->RecvCompletion(dwTransferred);
 
 	/// echo back
-	// send는 그냥 바로 보내는 거니까 preSend같은게 필요없는건가?
+	// send는 그냥 바로 보내는 거니까 preSend같은게 필요없는건가? ///# 0바이트 보낼 일이 있나? ㅎㅎ 
 	return client->PostSend();
 }
 
