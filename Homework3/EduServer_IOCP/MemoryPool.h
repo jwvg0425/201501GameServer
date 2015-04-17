@@ -101,7 +101,8 @@ void xdelete(T* object)
 	//DONE: object의 소멸자 불러주고 메모리풀에 반납.
 	object->~T();
 
-	//extra Info는 뭘 넘겨야 되지? 최근 할당 관련된 정보 힌트라고 해서 일단 size 넘기는걸로..
+	//extra Info는 뭘 넘겨야 되지? 최근 할당 관련된 정보 힌트라고 해서 일단 size 넘기는걸로.. 
+	///# 굿 ㅎㅎ 디버깅때 요긴한 정보로 실제 이 값을 런타임에 쓰지는 않는다 ㅎㅎ
 	//이번 과제 내에서 쓰는 부분은 없는 듯
 	GMemoryPool->Deallocate(object, sizeof(T));
 	

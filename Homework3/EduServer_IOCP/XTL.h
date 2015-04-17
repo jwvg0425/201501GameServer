@@ -52,7 +52,7 @@ public:
 	void deallocate(T* ptr, size_t n)
 	{
 		//DONE: 메모리풀에 반납
-		GMemoryPool->Deallocate(ptr, sizeof(T)*n);
+		GMemoryPool->Deallocate(ptr, sizeof(T)*n); ///#두번째 인자로 0xDEADBEEF 같은거 넣어주면 어떨까?
 	}
 };
 

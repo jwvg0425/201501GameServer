@@ -70,7 +70,7 @@ MemoryPool::MemoryPool()
 	//DONE: [2048, 4096] 범위 내에서 256바이트 단위로 SmallSizeMemoryPool을 할당하고 
 	//DONE: mSmallSizeMemoryPoolTable에 O(1) access가 가능하도록 SmallSizeMemoryPool의 주소 기록
 
-	for (int i = 2048; i < 4096; i += 256)
+	for (int i = 2048; i < 4096; i += 256) ///# for (int i = 2048; i <= 4096; i += 256) [2048, 4096) 가 아니라 [2048, 4096] ^^
 	{
 		SmallSizeMemoryPool* pool = new SmallSizeMemoryPool(i);
 		for (int j = recent + 1; j <= i; ++j)
