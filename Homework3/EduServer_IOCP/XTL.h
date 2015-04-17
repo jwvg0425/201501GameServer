@@ -52,7 +52,9 @@ public:
 	void deallocate(T* ptr, size_t n)
 	{
 		//DONE: 메모리풀에 반납
-		GMemoryPool->Deallocate(ptr, sizeof(T)*n); ///#두번째 인자로 0xDEADBEEF 같은거 넣어주면 어떨까?
+		//http://en.wikipedia.org/wiki/Hexspeak.
+		//숫자로 이런걸 표현하다니..
+		GMemoryPool->Deallocate(ptr, 0xDEADBEEF);
 	}
 };
 
