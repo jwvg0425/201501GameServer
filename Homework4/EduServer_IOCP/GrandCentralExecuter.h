@@ -19,13 +19,13 @@ public:
 		
 		if (InterlockedIncrement64(&mRemainTaskCount) > 1)
 		{
-			//TODO: 이미 누군가 작업중이면 어떻게?
-			
+			//DONE: 이미 누군가 작업중이면 어떻게?
+			//큐에 집어넣어놓으면 작업중인 놈이 알아서 다 해주겠지?
+			mCentralTaskQueue.push(task);
 		}
 		else
 		{
 			/// 처음 진입한 놈이 책임지고 다해주자 -.-;
-
 			mCentralTaskQueue.push(task);
 			
 			while (true)
@@ -33,9 +33,14 @@ public:
 				GCETask task;
 				if (mCentralTaskQueue.try_pop(task))
 				{
-					//TODO: task를 수행하고 mRemainTaskCount를 하나 감소 
+					//DONE: task를 수행하고 mRemainTaskCount를 하나 감소 
 					// mRemainTaskCount가 0이면 break;
-					
+					task();
+
+					if (InterlockedDecrement64(&mRemainTaskCount) == 0)
+					{
+						break;
+					}
 				}
 			}
 		}
@@ -44,7 +49,7 @@ public:
 
 
 private:
-	typedef concurrency::concurrent_queue<GCETask, STLAllocator<GCETask>> CentralTaskQueue;
+	using CentralTaskQueue = concurrency::concurrent_queue<GCETask, STLAllocator<GCETask>>;
 	CentralTaskQueue mCentralTaskQueue;
 	int64_t mRemainTaskCount;
 };
@@ -59,8 +64,6 @@ void GCEDispatch(T instance, F memfunc, Args&&... args)
 	/// shared_ptr이 아닌 녀석은 받으면 안된다. 작업큐에 들어있는중에 없어질 수 있으니..
 	static_assert(true == is_shared_ptr<T>::value, "T should be shared_ptr");
 
-	//TODO: intance의 memfunc를 std::bind로 묶어서 전달
-	
-
-	//GGrandCentralExecuter->DoDispatch(bind);
+	//DONE: intance의 memfunc를 std::bind로 묶어서 전달
+	GGrandCentralExecuter->DoDispatch(std::bind(memfunc, instance, std::forward<Args>(args)...));
 }
