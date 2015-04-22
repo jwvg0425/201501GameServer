@@ -18,7 +18,7 @@ void Timer::PushTimerJob(SyncExecutablePtr owner, const TimerTask& task, uint32_
 
 	//DONE: mTimerJobQueue에 TimerJobElement를 push..
 	//집어넣는 시점으로부터 after만큼 뒤에 실행되도록.
-	mTimerJobQueue.push(TimerJobElement(owner, task, GetTickCount64() + after));
+	mTimerJobQueue.push(TimerJobElement(owner, task, LTickCount + after));
 }
 
 
@@ -29,7 +29,7 @@ void Timer::DoTimerJob()
 
 	while (!mTimerJobQueue.empty())
 	{
-		TimerJobElement timerJobElem = mTimerJobQueue.top(); 
+		const TimerJobElement& timerJobElem = mTimerJobQueue.top(); 
 
 		if (LTickCount < timerJobElem.mExecutionTick)
 			break;
