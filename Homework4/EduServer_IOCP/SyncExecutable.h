@@ -18,14 +18,10 @@ public:
 		static_assert(true == std::is_convertible<T, SyncExecutable>::value, "T should be derived from SyncExecutable");
 
 		//DONE: mLock으로 보호한 상태에서, memfunc를 실행하고 결과값 R을 리턴
-		auto task = std::bind(memfunc, static_cast<T*>(this), std::forward<Args>(args)...); ///# forward 쓰려면 위의 템플릿아규먼트를 Args&&...
-		
-		FastSpinlockGuard lock(mLock);
-		return task();
 
 		///# 사실 이 부분은 여기서 바로 (지연되지 않고) 실행되기 때문에 bind로 묶을 필요는 없다.
-		//FastSpinlockGuard lockGuard(mLock);
-		//return (static_cast<T*>(this)->*memfunc)(args...);
+		FastSpinlockGuard lockGuard(mLock);
+		return (static_cast<T*>(this)->*memfunc)(args...);
 	}
 	
 

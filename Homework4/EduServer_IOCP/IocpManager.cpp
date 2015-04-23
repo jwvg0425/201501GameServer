@@ -7,8 +7,8 @@
 #include "EduServer_IOCP.h"
 #include "ClientSession.h"
 #include "SessionManager.h"
-
-#define GQCS_TIMEOUT	INFINITE //20
+//io 작업만 하는게 아니라 버프 걸고 풀고도 하니까 INFINITE보다는 일정 시간 지나면 pass하는게 어울릴 듯
+#define GQCS_TIMEOUT	20
 
 IocpManager* GIocpManager = nullptr;
 
@@ -169,7 +169,7 @@ unsigned int WINAPI IocpManager::IoWorkerThread(LPVOID lpParam)
 			int gle = GetLastError();
 
 			/// check time out first 
-			if (gle == WAIT_TIMEOUT)
+			if (gle == WAIT_TIMEOUT && context == nullptr)
 				continue;
 		
 			if (context->mIoType == IO_RECV || context->mIoType == IO_SEND )
