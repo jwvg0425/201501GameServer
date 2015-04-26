@@ -29,7 +29,14 @@ void Timer::DoTimerJob()
 
 	while (!mTimerJobQueue.empty())
 	{
-		const TimerJobElement& timerJobElem = mTimerJobQueue.top(); 
+		//이 놈이 문제다!
+		//이상하게 거는 lock과 나오는 lock이 계속 다름.
+		//lock을 걸고 작업 수행중에 다른 스레드들에서 작업을 push하면 뭔가 꼬이면서 crash가 난다.
+		//잘 찾아보니 STLAllocator에서 전역 메모리 풀을 이용해서 메모리를 관리함
+		//이 놈이 push할 때 vector의 메모리 연속성을 유지하기 위해 메모리 상에 존재하는 원소들 위치를 옮길 수 있다
+		//메모리 위치 옮김 -> 참조자는 원래 위치를 가리키고 있음 -> 폭망!
+		//따라서 참조자가 아니라 값 복사를 이용하면 아무 문제 없을 듯.
+		TimerJobElement timerJobElem = mTimerJobQueue.top();
 
 		if (LTickCount < timerJobElem.mExecutionTick)
 			break;
@@ -39,7 +46,7 @@ void Timer::DoTimerJob()
 		timerJobElem.mTask();
 
 		timerJobElem.mOwner->LeaveLock();
-
+		
 		mTimerJobQueue.pop();
 	}
 
