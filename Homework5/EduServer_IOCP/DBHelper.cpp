@@ -24,6 +24,7 @@ DbHelper::DbHelper()
 DbHelper::~DbHelper()
 {
 	//DONE: SQLFreeStmt를 이용하여 현재 SQLHSTMT 해제(unbind, 파라미터리셋, close 순서로)
+	///# 아래 것들은 일일이 에러체크하고 리턴시킬 필요없다. 소멸자니까 그냥 로그만 남겨도 OK. 그리고 Free가 안되는 상황이라면 사실상 서버 내려야겠지?
 	SQLRETURN ret = SQLFreeStmt(mCurrentSqlHstmt, SQL_UNBIND);
 	if (SQL_SUCCESS != ret && SQL_SUCCESS_WITH_INFO != ret)
 	{
@@ -83,6 +84,9 @@ bool DbHelper::Initialize(const wchar_t* connInfoStr, int workerThreadCount)
 		//DONE: SQLDriverConnect를 이용하여 SQL서버에 연결하고 그 핸들을 SQL_CONN의 mSqlHdbc에 할당
 		SQLRETURN ret = SQLDriverConnect(mSqlConnPool[i].mSqlHdbc, NULL, (SQLWCHAR*)connInfoStr, SQL_NTS,
 			nullptr, 0, nullptr, SQL_DRIVER_NOPROMPT); // =  SQLDriverConnect(...);
+
+		///# SQLRETURN ret = SQLDriverConnect(mSqlConnPool[i].mSqlHdbc, NULL, (SQLWCHAR*)connInfoStr, (SQLSMALLINT)wcslen(connInfoStr), NULL, 0, &resultLen, SQL_DRIVER_NOPROMPT);
+
 
 		if (SQL_SUCCESS != ret && SQL_SUCCESS_WITH_INFO != ret)
 		{
@@ -165,6 +169,7 @@ bool DbHelper::BindParamInt(int* param)
 	//DONE: int형 파라미터 바인딩
 	SQLRETURN ret = SQLBindParameter(mCurrentSqlHstmt, mCurrentBindParam++, SQL_PARAM_INPUT,
 		SQL_C_LONG, SQL_INTEGER, 10 /* 자릿수 말하는 인자인가? 뭔지 잘 모르겠다*/, 0, param, 0, nullptr); // = SQLBindParameter(...);
+	///# 맞다 ㅎㅎ 
 
 	if (SQL_SUCCESS != ret && SQL_SUCCESS_WITH_INFO != ret)
 	{
@@ -195,6 +200,7 @@ bool DbHelper::BindParamBool(bool* param)
 	SQLRETURN ret = SQLBindParameter(mCurrentSqlHstmt, mCurrentBindParam++, SQL_PARAM_INPUT,
 		SQL_C_BIT, SQL_BIT, 1, 0, param, 0, nullptr); // = SQLBindParameter(...);
 
+	///# 불은 1바이트로 처리: SQLRETURN ret = SQLBindParameter(mCurrentSqlHstmt, mCurrentBindParam++, SQL_PARAM_INPUT, SQL_C_TINYINT, SQL_TINYINT, 3, 0, param, 0, NULL);
 	if (SQL_SUCCESS != ret && SQL_SUCCESS_WITH_INFO != ret)
 	{
 		PrintSqlStmtError();

@@ -124,7 +124,7 @@ BEGIN
 	SELECT [playerName], [currentPosX], [currentPosY], [currentPosZ], [isValid], [comment]
 	FROM [dbo].[PlayerTable]
 	WHERE playerUID = @playerUID
-	SELECT @@ROWCOUNT
+	SELECT @@ROWCOUNT -- 여기서는 이거 하면 안된다.. 어차피 위에서 SELECT로 정보를 읽어옴. 
 END		   
 GO		   
 
