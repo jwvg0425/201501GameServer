@@ -8,7 +8,6 @@ LONG WINAPI ExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 	if ( IsDebuggerPresent() )
 		return EXCEPTION_CONTINUE_SEARCH ;
 
-
 	/// dump file 남기자.
 
 	HANDLE hFile = CreateFileA("EasyServer_minidump.dmp", GENERIC_READ | GENERIC_WRITE, 

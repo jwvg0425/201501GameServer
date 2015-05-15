@@ -10,11 +10,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
---DONE: if exists를 사용하여 PlayerTable 테이블이 존재한다면 해당 테이블 드랍
-
-IF EXISTS ( SELECT * FROM sys.tables where name = 'PlayerTable')
+IF EXISTS ( select * from sys.tables where name='PlayerTable' )
 	DROP TABLE [dbo].[PlayerTable]
 GO
+
 
 CREATE TABLE [dbo].[PlayerTable](
 	[playerUID] [int] NOT NULL PRIMARY KEY IDENTITY(100, 1),
@@ -37,10 +36,8 @@ CREATE PROCEDURE [dbo].[spCreatePlayer]
 	@name	NVARCHAR(32)
 AS
 BEGIN
-    --DONE: 해당 이름의 플레이어를 생성하고 플레이어의 identity를 리턴, [createTime]는 현재 생성 날짜로 설정
 	SET NOCOUNT ON
-	INSERT INTO [dbo].[PlayerTable] ([playerName], [createTime], [isValid])
-	VALUES (@name, GETDATE(), 1)
+	INSERT INTO PlayerTable(playerName, createTime, isValid) VALUES (@name, GETDATE(), 1)
 	SELECT @@IDENTITY
 END
 GO
@@ -53,9 +50,8 @@ CREATE PROCEDURE [dbo].[spDeletePlayer]
 	@playerUID	INT
 AS
 BEGIN
-	--DONE: 해당 플레이어 삭제
 	SET NOCOUNT ON
-	DELETE FROM [dbo].[PlayerTable] WHERE playerUID = @playerUID
+	DELETE FROM PlayerTable WHERE playerUID=@playerUID
 	SELECT @@ROWCOUNT
 END
 GO
@@ -71,11 +67,8 @@ CREATE PROCEDURE [dbo].[spUpdatePlayerPosition]
 	@posZ	FLOAT
 AS
 BEGIN
-    -- DONE: 해당 플레이어의 정보(x,y,z) 업데이트 
 	SET NOCOUNT ON
-	UPDATE [dbo].[PlayerTable]
-	SET [currentPosX] = @posX, [currentPosY] = @posY, [currentPosZ] = @posZ
-	WHERE playerUID = @playerUID
+	UPDATE PlayerTable SET currentPosX=@posX, currentPosY=@posY, currentPosZ=@posZ WHERE playerUID=@playerUID
 	SELECT @@ROWCOUNT
 END
 GO
@@ -119,20 +112,10 @@ CREATE PROCEDURE [dbo].[spLoadPlayer]
 	@playerUID	INT
 AS
 BEGIN
-    --DONE: 플레이어 정보  [playerName], [currentPosX], [currentPosY], [currentPosZ], [isValid], [comment]  얻어오기
 	SET NOCOUNT ON
-	SELECT [playerName], [currentPosX], [currentPosY], [currentPosZ], [isValid], [comment]
-	FROM [dbo].[PlayerTable]
-	WHERE playerUID = @playerUID
-	--억.. 이걸 왜했지
-	--SELECT @@ROWCOUNT -- 여기서는 이거 하면 안된다.. 어차피 위에서 SELECT로 정보를 읽어옴. 
+	SELECT [playerName], [currentPosX], [currentPosY], [currentPosZ], [isValid], [comment] FROM PlayerTable WHERE playerUID=@playerUID
 END		   
 GO		   
-
-
-
-
---저장 프로시저 테스트
 
 --EXEC spCreatePlayer '테스트플레이어'
 --GO
