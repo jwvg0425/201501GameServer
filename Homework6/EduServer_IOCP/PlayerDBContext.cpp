@@ -12,10 +12,8 @@ bool CreatePlayerDataContext::OnSQLExecute()
 {
 	DBHelper dbHelper;
 
-	int identity = 0;
-
 	dbHelper.BindParamText(mPlayerName);
-	dbHelper.BindResultColumnInt(&identity);
+	dbHelper.BindResultColumnInt(&mPlayerId);
 
 	if (dbHelper.Execute(SQL_CreatePlayer))
 	{
@@ -30,7 +28,8 @@ bool CreatePlayerDataContext::OnSQLExecute()
 
 void CreatePlayerDataContext::OnSuccess()
 {
-	EVENT_LOG("CreatePlayerDataContext success", mPlayerId);
+	//생성하는데 성공하면 걔 아이디를 바탕으로 정보도 가져온다
+	mSessionObject->mPlayer.RequestLoad(mPlayerId);
 }
 
 void CreatePlayerDataContext::OnFail()

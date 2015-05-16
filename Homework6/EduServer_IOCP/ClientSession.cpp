@@ -150,11 +150,10 @@ void ClientSession::AcceptCompletion()
 	mPlayer.TestCreatePlayerData(L"testName");
 
 	//DONE: 플레이어 id는 여러분의 플레이어 테이블 상황에 맞게 적절히 고쳐서 로딩하도록 
-	static int id = 100;
+	//static int id = 100;
+	//mPlayer.RequestLoad(id++);
 	//이 부분 id 그냥 static이면 경쟁 상태될 것 같은데... 확인해보면 id 건너뛰고 해서 제대로 load 안됨->delete도 안 됨...
-	//InterlockedIncrement 써봤으나 그렇게 해도 id 건너뛰는 현상이 발생. 구간 전체에 lock을 걸어야할 것 같은데...
- 	mPlayer.RequestLoad(id++);
-	
+	//그래서 TestCreatePlayerData한 다음 성공하면 거기서 해당 plyaerId를 기반으로 데이터 load하게 바꿈.
 }
 
 
