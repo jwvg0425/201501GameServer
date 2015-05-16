@@ -6,14 +6,14 @@
 void ThreadCallHistory::DumpOut(std::ostream& ost)
 {
 	//DONE: 현재 스레드의 call history를 ost 스트림에 쓰기
-	int count = min(mCounter, MAX_HISTORY);
+	uint64_t count = mCounter < MAX_HISTORY ? mCounter : MAX_HISTORY;
 
 	ost << "===== Call History [Thread:" << mThreadId << "]" << std::endl;
 
 
 	for (int i = 1; i <= count; i++)
 	{
-		ost << mHistory[i];
+		ost << mHistory[(mCounter - i) % MAX_HISTORY] << std::endl;
 	}
 
 	ost << "===== End of Call History" << std::endl << std::endl;
@@ -44,15 +44,16 @@ namespace LoggerUtil
 	void EventLogDumpOut(std::ostream& ost)
 	{
 		//DONE: gLogEvents내용 ost 스트림에 쓰기
-		int count = min(gCurrentLogIndex, MAX_LOG_SIZE);
+		uint64_t count = gCurrentLogIndex < MAX_LOG_SIZE ? gCurrentLogIndex : MAX_LOG_SIZE;
 
 		ost << "===== Log Event " << std::endl;
 
 		for (int i = 1; i <= count; ++i)
 		{
-			ost << "[Thread : " << gLogEvents[i].mThreadId <<
-				 "] [Info : " << gLogEvents[i].mAdditionalInfo <<
-				 "] [Message : " << gLogEvents[i].mMessage << 
+			int idx = (gCurrentLogIndex - i) % MAX_LOG_SIZE;
+			ost << "[Thread : " << gLogEvents[idx].mThreadId <<
+				 "] [Info : " << gLogEvents[idx].mAdditionalInfo <<
+				 "] [Message : " << gLogEvents[idx].mMessage << 
 				 "]" << std::endl;
 		}
 		ost << "===== End of Log Event" << std::endl << std::endl;

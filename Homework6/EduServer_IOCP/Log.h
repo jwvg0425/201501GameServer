@@ -92,7 +92,8 @@ public:
 	{
 		if (LThreadType != THREAD_MAIN)
 		{
-			//todo: LThreadCallElapsedRecord에 함수 수행 시간 남기기
+			//DONE: LThreadCallElapsedRecord에 함수 수행 시간 남기기
+			LThreadCallElapsedRecord->Append(mFuncSig, GetTickCount64() - mStartTick);
 		}
 	}
 
@@ -127,6 +128,7 @@ namespace LoggerUtil
 		
 		//DONE: gLogEvents에 LogEvent정보 남기기
 		//배열 인덱스 안 터지게 순환하면서 저장. 근데 이러면 선후 관계 헷갈릴 것 같은데 상관없을려나
+		//출력할 때 인덱스를 적절한 위치에서 시작하게 하는 군.. 상관 없다고 합니다
 		gLogEvents[index % MAX_LOG_SIZE].mMessage = msg;
 		gLogEvents[index % MAX_LOG_SIZE].mAdditionalInfo = info;
 		gLogEvents[index % MAX_LOG_SIZE].mThreadId = LWorkerThreadId;

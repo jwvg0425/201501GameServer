@@ -75,7 +75,8 @@ LONG WINAPI ExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 			do
 			{
 				//DONE: 내 프로세스 내의 스레드중 나 자신 스레드만 빼고 멈추게..
-				if (te32.th32ThreadID != myThreadId)
+				if (te32.th32OwnerProcessID == myProcessId &&
+					te32.th32ThreadID != myThreadId)
 				{
 					HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, te32.th32ThreadID);
 
