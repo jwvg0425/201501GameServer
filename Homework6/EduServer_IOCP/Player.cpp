@@ -104,7 +104,7 @@ void Player::TestDeletePlayerData(int playerId)
 {
 	//DONE: DB스레드풀에 playerId에 해당하는 플레이어 생성 삭제 작업을 수행시켜보기
 	DeletePlayerDataContext* context = new DeletePlayerDataContext(mSession, mPlayerId);
-	context->mPlayerId = playerId;
+	context->mPlayerId = playerId; ///# 생성자로 넘어갔는데 중복으로 할 필요가 ㅎㅎ
 
 	GDatabaseManager->PostDatabaseRequest(context);
 }
