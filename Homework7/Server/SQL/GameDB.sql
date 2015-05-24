@@ -117,6 +117,20 @@ BEGIN
 END		   
 GO		   
 
+--테스트를 위한 플레이어 목록 만들어 넣기
+DECLARE @nI INT
+SET @nI = 0
+DECLARE @tmp INT
+while @nI < 100
+BEGIN
+	DECLARE @name CHAR(32)
+	SET @name = 'test' + cast(@nI AS CHAR(24))
+	EXEC spCreatePlayer @name
+	SET @nI = @nI + 1
+END
+
+SELECT * FROM [dbo].[PlayerTable]
+
 --EXEC spCreatePlayer '테스트플레이어'
 --GO
 

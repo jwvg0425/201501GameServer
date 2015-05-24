@@ -147,10 +147,6 @@ void ClientSession::AcceptCompletion()
 		printf_s("[DEBUG] PreRecv error: %d\n", GetLastError());
 	}
 
-	//연결 성공하면 테스트용으로 player 계정 하나 만들자... 계정이 없으니 테스트가 안되네 넣을 곳도 마땅찮고
-	std::wstring accountName = L"test" + std::to_wstring(rand() % 10000);
-	mPlayer->TestCreatePlayerData(accountName.c_str());
-
 	GBroadcastManager->RegisterClient(this);
 }
 

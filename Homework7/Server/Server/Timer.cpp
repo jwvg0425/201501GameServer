@@ -29,7 +29,7 @@ void Timer::DoTimerJob()
 
 	while (!mTimerJobQueue.empty())
 	{
-		const TimerJobElement& timerJobElem = mTimerJobQueue.top();
+		const TimerJobElement timerJobElem = mTimerJobQueue.top();
 
 		if (LTickCount < timerJobElem.mExecutionTick)
 			break;
