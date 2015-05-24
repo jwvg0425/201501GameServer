@@ -10,6 +10,8 @@
 #include "PacketInterface.h"
 #include "BroadcastManager.h"
 
+
+
 Player::Player(ClientSession* session) : mSession(session)
 {
 	PlayerReset();
@@ -48,7 +50,7 @@ void Player::ResponseLoad(int pid, float x, float y, float z, bool valid, wchar_
 	mComment = comment;
 
 	//TODO: 아래는 나중에 로그로...
-	wprintf_s(L"PID[%d], X[%f] Y[%f] Z[%f] NAME[%s] COMMENT[%s]\n", mPlayerId, mPosX, mPosY, mPosZ, mPlayerName, mComment);
+	wprintf_s(L"PID[%d], X[%f] Y[%f] Z[%f] NAME[%s] COMMENT[%s]\n", mPlayerId, mPosX, mPosY, mPosZ, mPlayerName.c_str(), mComment.c_str());
 	
 	DoSyncAfter(HEART_BEAT, GetSharedFromThis<Player>(), &Player::OnTick);
 

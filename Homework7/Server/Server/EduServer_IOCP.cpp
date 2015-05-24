@@ -22,6 +22,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	/// for dump on crash
 	SetUnhandledExceptionFilter(ExceptionFilter);
 
+	std::locale::global(std::locale("kor"));
+
 	/// Global Managers
 	GMemoryPool = new MemoryPool;
 	GClientSessionManager = new ClientSessionManager;

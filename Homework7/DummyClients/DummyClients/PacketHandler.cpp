@@ -99,5 +99,46 @@ REGISTER_HANDLER(PKT_SC_LOGIN)
 
 	const Position& pos = loginResult.playerpos();
 
+	session->UpdatePlayer(loginResult.playerid(), loginResult.playername(), pos.x(), pos.y(), pos.z());
+
 	printf_s("LOGIN SUCCESS: ID[%d], NAME[%s], POS[%f, %f, %f]\n", loginResult.playerid(), loginResult.playername().c_str(), pos.x(), pos.y(), pos.z());
+
+	//test를 위한 move
+	session->move();
+}
+
+REGISTER_HANDLER(PKT_SC_MOVE)
+{
+	MoveResult moveResult;
+	if (false == moveResult.ParseFromCodedStream(&payloadStream))
+	{
+		session->DisconnectRequest(DR_ACTIVE);
+		return;
+	}
+
+	printf_s("player [%d] move to POS[%f, %f, %f]\n", session->GetPlayerId(), session->GetX(), session->GetY(), session->GetZ());
+
+	const Position& pos = moveResult.playerpos();
+
+	session->UpdatePlayerPos(pos.x(), pos.y(), pos.z());
+
+	//test를 위한 move, chat
+	session->move();
+	if (rand() % 10)
+	{
+		session->chat();
+	}
+}
+
+REGISTER_HANDLER(PKT_SC_CHAT)
+{
+	ChatResult chatResult;
+
+	if (false == chatResult.ParseFromCodedStream(&payloadStream))
+	{
+		session->DisconnectRequest(DR_ACTIVE);
+		return;
+	}
+
+	printf_s("player [%s] says [%s]\n", chatResult.playername().c_str(), chatResult.playermessage().c_str());
 }

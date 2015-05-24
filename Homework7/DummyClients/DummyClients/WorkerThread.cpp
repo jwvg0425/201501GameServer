@@ -27,8 +27,6 @@ DWORD WorkerThread::Run()
 			break;
 
 		DoSendJob(); ///< aggregated sends
-
-		//... ...
 	}
 
 	return 1;

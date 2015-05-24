@@ -147,4 +147,3 @@ REGISTER_HANDLER(PKT_CS_CHAT)
 	*outPacket.mutable_playermessage() = inPacket.playermessage();
 	GBroadcastManager->BroadcastPacket(PKT_SC_CHAT, outPacket);
 }
-
