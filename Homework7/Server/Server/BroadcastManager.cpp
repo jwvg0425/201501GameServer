@@ -48,3 +48,25 @@ void BroadcastManager::BroadcastPacket(short packetType, const protobuf::Message
 		}
 	}
 }
+
+void BroadcastManager::BroadcastPacketInRange(short packetType, const protobuf::MessageLite& payload, float x, float y, float z, float radius)
+{
+	FastSpinlockGuard criticalSection(mLock);
+
+	for (auto it : mConnectedClientSet)
+	{
+		float xDiff = it->mPlayer->GetX() - x;
+		float yDiff = it->mPlayer->GetY() - y;
+		float zDiff = it->mPlayer->GetZ() - z;
+
+		if (xDiff*xDiff + yDiff*yDiff + zDiff*zDiff > radius * radius)
+		{
+			continue;
+		}
+
+		if (false == it->PostSend(packetType, payload))
+		{
+			it->DisconnectRequest(DR_ACTIVE);
+		}
+	}
+}

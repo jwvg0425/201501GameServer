@@ -91,7 +91,9 @@ void Player::ResponseUpdatePosition(float x, float y, float z)
 	outPacket.mutable_playerpos()->set_y(mPosY);
 	outPacket.mutable_playerpos()->set_z(mPosZ);
 
-	mSession->PostSend(PKT_SC_MOVE, outPacket);
+	//움직이는 것도 근처 클라이언트들한테는 알려주기
+	GBroadcastManager->BroadcastPacketInRange(PKT_SC_MOVE, outPacket,
+		GetX(), GetY(), GetZ(), 50.0f);
 }
 
 void Player::RequestUpdateComment(const wchar_t* comment)

@@ -19,6 +19,9 @@ public:
 
 	void BroadcastPacket(short packetType, const protobuf::MessageLite& payload);
 
+	//x,y,z 좌표를 기준으로 radius 거리 안에 있는 클라이언트들에게만 패킷 전송
+	void BroadcastPacketInRange(short packetType, const protobuf::MessageLite& payload, float x, float y, float z, float radius);
+
 private:
 	FastSpinlock mLock;
 

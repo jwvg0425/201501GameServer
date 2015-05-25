@@ -30,6 +30,10 @@ public:
 
 	const std::wstring& GetPlayerName() { return mPlayerName; }
 
+	float GetX(){ return mPosX; }
+	float GetY(){ return mPosY; }
+	float GetZ(){ return mPosZ; }
+
 
 
 private:
