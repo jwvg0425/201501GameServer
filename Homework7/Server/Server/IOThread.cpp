@@ -143,15 +143,13 @@ void IOThread::DoSendJob()
 {
 	while (!LSendRequestSessionList->empty())
 	{
-		auto& session = LSendRequestSessionList->front();
-	
+		auto session = LSendRequestSessionList->front();
+		
 		if (session->FlushSend())
 		{
-			/// true 리턴 되면 빼버린다.
 			LSendRequestSessionList->pop_front();
 		}
 	}
-	
 }
 
 void IOThread::DoTimerJob()

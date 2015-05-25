@@ -21,8 +21,17 @@
 #include <memory>
 #include <deque>
 #include <vector>
+#include <map>
+#include <hash_map>
+#include <set>
+#include <hash_set>
+#include <queue>
 #include <type_traits>
-#include <algorithm>
+#include <iostream>
+#include <sstream>
+#include <functional>
 
+#include <ppl.h>
+#include <concurrent_queue.h>
 
 // TODO: reference additional headers your program requires here

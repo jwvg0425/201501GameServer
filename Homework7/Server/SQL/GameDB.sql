@@ -123,13 +123,11 @@ SET @nI = 0
 DECLARE @tmp INT
 while @nI < 100
 BEGIN
-	DECLARE @name CHAR(32)
-	SET @name = 'test' + cast(@nI AS CHAR(24))
+	DECLARE @name VARCHAR(32)
+	SET @name = 'test' + cast(@nI AS VARCHAR(5))
 	EXEC spCreatePlayer @name
 	SET @nI = @nI + 1
 END
-
-SELECT * FROM [dbo].[PlayerTable]
 
 --EXEC spCreatePlayer '테스트플레이어'
 --GO

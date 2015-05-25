@@ -68,6 +68,27 @@
     <ClInclude Include="PacketInterface.h">
       <Filter>Main</Filter>
     </ClInclude>
+    <ClInclude Include="MPL.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="XTL.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="SyncExecutable.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryPool.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="LockOrderChecker.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -114,6 +135,18 @@
     </ClCompile>
     <ClCompile Include="PacketHandler.cpp">
       <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryPool.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="LockOrderChecker.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

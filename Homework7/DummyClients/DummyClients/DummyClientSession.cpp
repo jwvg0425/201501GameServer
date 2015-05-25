@@ -10,9 +10,11 @@
 #include "PacketInterface.h"
 #include "MyPacket.pb.h"
 
+#include "Player.h"
+
 #define CLIENT_BUFSIZE	65536
 
-DummyClientSession::DummyClientSession() : Session(CLIENT_BUFSIZE, CLIENT_BUFSIZE)
+DummyClientSession::DummyClientSession() : Session(CLIENT_BUFSIZE, CLIENT_BUFSIZE), mPlayer(new Player(this))
 {
 }
 
@@ -168,51 +170,4 @@ void DummyClientSession::Login()
 
 	SendRequest(MyPacket::PKT_CS_LOGIN, loginRequest);
 
-}
-
-void DummyClientSession::UpdatePlayer(int pid, const std::string& name, float x, float y, float z)
-{
-	UpdatePlayerId(pid);
-	UpdatePlayerName(name);
-	UpdatePlayerPos(x, y, z);
-}
-
-void DummyClientSession::UpdatePlayerId(int pid)
-{
-	mPlayerId = pid;
-}
-
-void DummyClientSession::UpdatePlayerName(const std::string& name)
-{
-	mPlayerName = name;
-}
-
-void DummyClientSession::UpdatePlayerPos(float x, float y, float z)
-{
-	mX = x;
-	mY = y;
-	mZ = z;
-}
-
-void DummyClientSession::move()
-{
-	MyPacket::MoveRequest moveRequest;
-	moveRequest.set_playerid(mPlayerId);
-	mX = (rand() % 10000) * 0.0001f;
-	mY = (rand() % 10000) * 0.0001f;
-	mZ = (rand() % 10000) * 0.0001f;
-	moveRequest.mutable_playerpos()->set_x(mX);
-	moveRequest.mutable_playerpos()->set_y(mY);
-	moveRequest.mutable_playerpos()->set_z(mZ);
-
-	SendRequest(MyPacket::PKT_CS_MOVE, moveRequest);
-}
-
-void DummyClientSession::chat()
-{
-	MyPacket::ChatRequest chatRequest;
-	chatRequest.set_playerid(mPlayerId);
-	*chatRequest.mutable_playermessage() = "testtesttestestettteste";
-
-	SendRequest(MyPacket::PKT_CS_CHAT, chatRequest);
 }

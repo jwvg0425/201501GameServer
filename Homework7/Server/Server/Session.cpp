@@ -130,7 +130,12 @@ bool Session::PostSend(short packetType, const protobuf::MessageLite& payload)
 
 
 	/// flush later...
-	LSendRequestSessionList->push_back(this);
+	//하나만 넣기
+	if (!mIsRequest)
+	{
+		mIsRequest = true;
+		LSendRequestSessionList->push_back(this);
+	}
 
 	mSendBuffer.Commit(totalSize);
 
@@ -156,7 +161,10 @@ bool Session::FlushSend()
 	{
 		/// 보낼 데이터도 없는 경우
 		if (0 == mSendPendingCount)
+		{
+			mIsRequest = false;
 			return true;
+		}
 		
 		return false;
 	}
@@ -189,7 +197,13 @@ bool Session::FlushSend()
 
 	mSendPendingCount++;
 
-	return mSendPendingCount == 1;
+	if (mSendPendingCount == 1)
+	{
+		mIsRequest = false;
+		return true;
+	}
+
+	return false;
 }
 
 void Session::DisconnectCompletion(DisconnectReason dr)

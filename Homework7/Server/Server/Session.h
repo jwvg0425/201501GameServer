@@ -47,6 +47,8 @@ protected:
 	volatile long	mRefCount;
 	volatile long	mConnected;
 
+	bool			mIsRequest = false;
+
 };
 
 

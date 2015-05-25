@@ -7,6 +7,8 @@
 #include "DummyClientSession.h"
 #include "WorkerThread.h"
 #include "SessionManager.h"
+#include "Timer.h"
+#include "LockOrderChecker.h"
 
 
 IocpManager* GIocpManager = nullptr;
@@ -146,6 +148,8 @@ unsigned int WINAPI IocpManager::IoWorkerThread(LPVOID lpParam)
 	LThreadType = THREAD_IO_WORKER;
 	LWorkerThreadId = reinterpret_cast<int>(lpParam);
 	LSendRequestSessionList = new std::deque<Session*>;
+	LTimer = new Timer;
+	LLockOrderChecker = new LockOrderChecker(LWorkerThreadId);
 	GThreadCallHistory[LWorkerThreadId] = LThreadCallHistory = new ThreadCallHistory(LWorkerThreadId);
 	
 	return GIocpManager->mWorkerThread[LWorkerThreadId]->Run();

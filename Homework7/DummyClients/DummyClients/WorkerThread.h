@@ -11,6 +11,7 @@ public:
 
 	bool DoIocpJob(); ///< false리턴 되면 종료를 의미
 	void DoSendJob();
+	void DoTimerJob();
 
 	HANDLE GetHandle() { return mThreadHandle;  }
 	

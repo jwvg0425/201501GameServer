@@ -3,6 +3,7 @@
 #include "Log.h"
 #include "PacketInterface.h"
 #include "DummyClientSession.h"
+#include "Player.h"
 
 
 #include "MyPacket.pb.h"
@@ -99,12 +100,13 @@ REGISTER_HANDLER(PKT_SC_LOGIN)
 
 	const Position& pos = loginResult.playerpos();
 
-	session->UpdatePlayer(loginResult.playerid(), loginResult.playername(), pos.x(), pos.y(), pos.z());
+	session->GetPlayer()->SetPlayerId(loginResult.playerid());
+	session->GetPlayer()->SetPlayerName(loginResult.playername());
+	session->GetPlayer()->SetPlayerPos(pos.x(), pos.y(), pos.z());
 
 	printf_s("LOGIN SUCCESS: ID[%d], NAME[%s], POS[%f, %f, %f]\n", loginResult.playerid(), loginResult.playername().c_str(), pos.x(), pos.y(), pos.z());
 
-	//test를 위한 move
-	session->move();
+	DoSyncAfter(1000, session->GetPlayer(), &Player::OnTick);
 }
 
 REGISTER_HANDLER(PKT_SC_MOVE)
@@ -115,19 +117,13 @@ REGISTER_HANDLER(PKT_SC_MOVE)
 		session->DisconnectRequest(DR_ACTIVE);
 		return;
 	}
+	auto player = session->GetPlayer();
 
-	printf_s("player [%d] move to POS[%f, %f, %f]\n", session->GetPlayerId(), session->GetX(), session->GetY(), session->GetZ());
+	printf_s("player [%d] move to POS[%f, %f, %f]\n", player->GetPlayerId(), player->GetX(), player->GetY(), player->GetZ());
 
 	const Position& pos = moveResult.playerpos();
 
-	session->UpdatePlayerPos(pos.x(), pos.y(), pos.z());
-
-	//test를 위한 move, chat
-	session->move();
-	if (rand() % 10)
-	{
-		session->chat();
-	}
+	player->SetPlayerPos(pos.x(), pos.y(), pos.z());
 }
 
 REGISTER_HANDLER(PKT_SC_CHAT)

@@ -5,6 +5,7 @@
 #include "WorkerThread.h"
 #include "DummyClientSession.h"
 #include "IocpManager.h"
+#include "Timer.h"
 
 
 WorkerThread::WorkerThread(int workerThreadId, HANDLE hThread, HANDLE hCompletionPort)
@@ -25,6 +26,8 @@ DWORD WorkerThread::Run()
 	{
 		if ( false == DoIocpJob() )
 			break;
+
+		DoTimerJob();
 
 		DoSendJob(); ///< aggregated sends
 	}
@@ -137,4 +140,10 @@ void WorkerThread::DoSendJob()
 	}
 	
 }
+
+void WorkerThread::DoTimerJob()
+{
+	LTimer->DoTimerJob();
+}
+
 

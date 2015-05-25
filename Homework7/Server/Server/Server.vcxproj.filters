@@ -12,212 +12,227 @@
     <Filter Include="소스 파일\SQL">
       <UniqueIdentifier>{8461da85-fa7b-49f9-9305-1f12715390a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Main">
+      <UniqueIdentifier>{0aaea341-6817-4e53-b1c7-22b64e58becb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Util">
+      <UniqueIdentifier>{7cdb772a-b7df-4191-96a2-18f81f2bf8f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DB">
+      <UniqueIdentifier>{ea73dc9e-1551-428f-a89d-32d0bba24b35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Session">
+      <UniqueIdentifier>{26c3d35f-ee75-4968-aa5f-fc7ec0976931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Packet">
+      <UniqueIdentifier>{cba13c55-2013-4d5a-a41e-9430e80c972b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BroadcastManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CircularBuffer.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ClientSession.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ClientSessionManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ContentsConfig.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DBContext.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DBHelper.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DBManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DBThread.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="EduServer_IOCP.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Exception.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="FastSpinlock.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GrandCentralExecuter.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="IocpManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="IOThread.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LockOrderChecker.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MemoryPool.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MPL.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectPool.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="OverlappedIOContext.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerDBContext.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerSession.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Session.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SQLStatement.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="StackWalker.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SyncExecutable.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ThreadLocal.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="XTL.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Protobuf\MyPacket.pb.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="CircularBuffer.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="BroadcastManager.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientSessionManager.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentsConfig.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientSession.h">
+      <Filter>소스 파일\Session</Filter>
+    </ClInclude>
+    <ClInclude Include="DBContext.h">
+      <Filter>소스 파일\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBHelper.h">
+      <Filter>소스 파일\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBManager.h">
+      <Filter>소스 파일\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBThread.h">
+      <Filter>소스 파일\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="EduServer_IOCP.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="FastSpinlock.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="GrandCentralExecuter.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="IocpManager.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="IOThread.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="LockOrderChecker.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryPool.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="MPL.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="OverlappedIOContext.h">
+      <Filter>소스 파일\Main</Filter>
     </ClInclude>
     <ClInclude Include="PacketInterface.h">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadLocal.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerSession.h">
+      <Filter>소스 파일\Session</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>소스 파일\Session</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDBContext.h">
+      <Filter>소스 파일\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="SQLStatement.h">
+      <Filter>소스 파일\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="StackWalker.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="SyncExecutable.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="XTL.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Protobuf\MyPacket.pb.h">
+      <Filter>소스 파일\Packet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="BroadcastManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CircularBuffer.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
-    <ClCompile Include="ClientSession.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="BroadcastManager.cpp">
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="ClientSessionManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientSession.cpp">
+      <Filter>소스 파일\Session</Filter>
     </ClCompile>
     <ClCompile Include="DBContext.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\DB</Filter>
     </ClCompile>
     <ClCompile Include="DBHelper.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\DB</Filter>
     </ClCompile>
     <ClCompile Include="DBManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\DB</Filter>
     </ClCompile>
     <ClCompile Include="DBThread.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\DB</Filter>
     </ClCompile>
     <ClCompile Include="EduServer_IOCP.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="Exception.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="FastSpinlock.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="GrandCentralExecuter.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="IocpManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="IOThread.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="LockOrderChecker.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="Log.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="MemoryPool.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="OverlappedIOContext.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="PacketHandler.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerDBContext.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerSession.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Session.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SQLTest.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="StackWalker.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="ThreadLocal.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerSession.cpp">
+      <Filter>소스 파일\Session</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>소스 파일\Session</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDBContext.cpp">
+      <Filter>소스 파일\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="SQLTest.cpp">
+      <Filter>소스 파일\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="StackWalker.cpp">
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Protobuf\MyPacket.pb.cc">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Packet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Protobuf\MyPacket.proto">
-      <Filter>소스 파일</Filter>
-    </None>
     <None Include="..\SQL\GameDB.sql">
       <Filter>소스 파일\SQL</Filter>
+    </None>
+    <None Include="..\..\Protobuf\MyPacket.proto">
+      <Filter>소스 파일\Packet</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 #include "DummyClientSession.h"
 #include "SessionManager.h"
 #include "IocpManager.h"
+#include "MemoryPool.h"
 
 /// config values
 int MAX_CONNECTION = 0;
@@ -58,6 +59,7 @@ int main(int argc, char* argv[])
 	SetUnhandledExceptionFilter(ExceptionFilter);
 
 	/// Global Managers
+	GMemoryPool = new MemoryPool;
 	GSessionManager = new SessionManager;
 	GIocpManager = new IocpManager;
 
