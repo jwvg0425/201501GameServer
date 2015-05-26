@@ -10,6 +10,7 @@
 
 
 
+
 Player::Player(DummyClientSession* session) : mSession(session)
 {
 	PlayerReset();
@@ -27,6 +28,7 @@ void Player::PlayerReset()
 	mIsValid = false;
 	mPosX = mPosY = mPosZ = 0;
 	mChatNum = 0;
+	mIsLogin = false;
 }
 
 using namespace MyPacket;
@@ -50,10 +52,13 @@ void Player::OnTick()
 
 void Player::Move()
 {
+	if (!mIsLogin)
+		return;
+
 	MyPacket::MoveRequest moveRequest;
 	moveRequest.set_playerid(mPlayerId);
 	int xRate, yRate, zRate;
-	const float speed = 3.0f;
+	const float speed = 0.3f;
 
 	xRate = rand() % 10000;
 	yRate = rand() % (10000 - xRate);
@@ -72,6 +77,13 @@ void Player::Move()
 	mPosY = mPosY + speed*yRate*0.0001f;
 	mPosZ = mPosZ + speed*zRate*0.0001f;
 
+	if (mPosX < 0.0f) mPosX = 0.0f;
+	if (mPosX > 50.0f) mPosX = 50.0f;
+	if (mPosY < 0.0f) mPosY = 0.0f;
+	if (mPosY > 50.0f) mPosY = 50.0f;
+	if (mPosZ < 0.0f) mPosZ = 0.0f;
+	if (mPosZ > 50.0f) mPosZ = 50.0f;
+
 	moveRequest.mutable_playerpos()->set_x(mPosX);
 	moveRequest.mutable_playerpos()->set_y(mPosY);
 	moveRequest.mutable_playerpos()->set_z(mPosZ);
@@ -81,6 +93,9 @@ void Player::Move()
 
 void Player::Chat()
 {
+	if (!mIsLogin)
+		return;
+
 	MyPacket::ChatRequest chatRequest;
 	chatRequest.set_playerid(mPlayerId);
 
@@ -108,13 +123,17 @@ void Player::Chat()
 
 void Player::IncreaseChatNum()
 {
-	InterlockedIncrement(&mChatNum);
-
-	if (mChatNum > 100)
+	if (InterlockedIncrement(&mChatNum) == 100)
 	{
 		MyPacket::LogoutRequest logoutRequest;
 		logoutRequest.set_playerid(mPlayerId);
 
+		mIsLogin = false;
 		mSession->SendRequest(MyPacket::PKT_CS_LOGOUT, logoutRequest);
 	}
+}
+
+void Player::Login()
+{
+	mIsLogin = true;
 }

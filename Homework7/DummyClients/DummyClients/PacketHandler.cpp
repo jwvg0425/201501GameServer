@@ -103,6 +103,7 @@ REGISTER_HANDLER(PKT_SC_LOGIN)
 	session->GetPlayer()->SetPlayerId(loginResult.playerid());
 	session->GetPlayer()->SetPlayerName(loginResult.playername());
 	session->GetPlayer()->SetPlayerPos(pos.x(), pos.y(), pos.z());
+	session->GetPlayer()->Login();
 
 	printf_s("LOGIN SUCCESS: ID[%d], NAME[%s], POS[%f, %f, %f]\n", loginResult.playerid(), loginResult.playername().c_str(), pos.x(), pos.y(), pos.z());
 
@@ -150,7 +151,10 @@ REGISTER_HANDLER(PKT_SC_LOGOUT)
 		return;
 	}
 
-	printf_s("player [%d] logout\n", logoutResult.playerid());
+	if (logoutResult.playerid() == session->GetPlayer()->GetPlayerId())
+	{
+		session->DisconnectRequest(DR_LOGOUT);
+	}
 
-	session->DisconnectRequest(DR_LOGOUT);
+	printf_s("player [%d] logout\n", logoutResult.playerid());
 }

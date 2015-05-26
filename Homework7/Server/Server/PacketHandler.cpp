@@ -145,8 +145,7 @@ REGISTER_HANDLER(PKT_CS_CHAT)
 		
 	outPacket.set_playername(name);
 	*outPacket.mutable_playermessage() = inPacket.playermessage();
-	GBroadcastManager->BroadcastPacketInRange(PKT_SC_CHAT, outPacket,
-		session->mPlayer->GetX(), session->mPlayer->GetY(), session->mPlayer->GetZ(), 50.0f);
+	GBroadcastManager->BroadcastPacket(PKT_SC_CHAT, outPacket);
 }
 
 REGISTER_HANDLER(PKT_CS_LOGOUT)
@@ -167,5 +166,5 @@ REGISTER_HANDLER(PKT_CS_LOGOUT)
 
 	LogoutResult outPacket;
 	outPacket.set_playerid(session->mPlayer->GetPlayerId());
-	session->PostSend(PKT_SC_LOGOUT, outPacket);
+	GBroadcastManager->BroadcastPacket(PKT_SC_LOGOUT, outPacket);
 }

@@ -27,7 +27,6 @@ void Player::PlayerReset()
 	mComment = L"";
 	mPlayerId = -1;
 	mIsValid = false;
-	mIsLogin = false;
 	mPosX = mPosY = mPosZ = 0;
 }
 
@@ -66,10 +65,6 @@ void Player::ResponseLoad(int pid, float x, float y, float z, bool valid, wchar_
 	strName.assign(mPlayerName.begin(), mPlayerName.end());
 
 	outPacket.set_playername(strName);
-	mIsLogin = true;
-
-	//load 성공하면 이 플레이어로 재접속은 불가능하게
-	RequestUpdateValidation(false);
 	mSession->PostSend(PKT_SC_LOGIN, outPacket);
 }
 
@@ -95,9 +90,7 @@ void Player::ResponseUpdatePosition(float x, float y, float z)
 	outPacket.mutable_playerpos()->set_y(mPosY);
 	outPacket.mutable_playerpos()->set_z(mPosZ);
 
-	//움직이는 것도 근처 클라이언트들한테는 알려주기
-	GBroadcastManager->BroadcastPacketInRange(PKT_SC_MOVE, outPacket,
-		GetX(), GetY(), GetZ(), 50.0f);
+	GBroadcastManager->BroadcastPacket(PKT_SC_MOVE, outPacket);
 }
 
 void Player::RequestUpdateComment(const wchar_t* comment)

@@ -1,5 +1,6 @@
 #pragma once
 #include "SyncExecutable.h"
+#include "FastSpinLock.h"
 
 class DummyClientSession;
 
@@ -32,6 +33,7 @@ public:
 	float GetY(){ return mPosY; }
 	float GetZ(){ return mPosZ; }
 
+	void Login();
 	void Move();
 	void Chat();
 
@@ -52,6 +54,7 @@ private:
 	float	mPosY;
 	float	mPosZ;
 	bool	mIsValid;
+	bool	mIsLogin;
 	unsigned long long mChatNum;
 	std::string	mPlayerName;
 	std::string	mComment;
