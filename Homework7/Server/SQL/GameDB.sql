@@ -113,7 +113,7 @@ CREATE PROCEDURE [dbo].[spLoadPlayer]
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT [playerName], [currentPosX], [currentPosY], [currentPosZ], [isValid], [comment] FROM PlayerTable WHERE playerUID=@playerUID
+	SELECT [playerName], [currentPosX], [currentPosY], [currentPosZ], [isValid], [comment] FROM PlayerTable WHERE playerUID=@playerUID AND isValid = 1
 END		   
 GO		   
 

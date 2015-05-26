@@ -9,6 +9,8 @@
 #include "IocpManager.h"
 #include "MemoryPool.h"
 
+#include <time.h>
+
 /// config values
 int MAX_CONNECTION = 0;
 char CONNECT_ADDR[32] = { 0, }; 
@@ -32,6 +34,8 @@ int main(int argc, char* argv[])
 	MAX_CONNECTION = 10;
 	strcpy_s(CONNECT_ADDR, "10.73.44.30");
 	CONNECT_PORT = 41026;
+
+	srand((unsigned)time(nullptr));
 
 	if ( argc < 2 )
 	{

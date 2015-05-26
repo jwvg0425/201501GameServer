@@ -136,7 +136,7 @@ REGISTER_HANDLER(PKT_SC_CHAT)
 		return;
 	}
 
-	printf_s("player [%s] says [%s]\n", chatResult.playername().c_str(), chatResult.playermessage().c_str());
+	printf_s("[%s] listen [%s] says [%s]\n", session->GetPlayer()->GetPlayerName(), chatResult.playername().c_str(), chatResult.playermessage().c_str());
 	session->GetPlayer()->IncreaseChatNum();
 }
 

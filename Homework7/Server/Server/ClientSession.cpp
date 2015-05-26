@@ -158,6 +158,8 @@ void ClientSession::OnDisconnect(DisconnectReason dr)
 	TRACE_THIS;
 
 	printf_s("[DEBUG] Client Disconnected: Reason=%d IP=%s, PORT=%d \n", dr, inet_ntoa(mClientAddr.sin_addr), ntohs(mClientAddr.sin_port));
+	//logout하면 다시 사용할 수 있게
+	mPlayer->RequestUpdateValidation(true);
 	GBroadcastManager->UnregisterClient(this);
 }
 

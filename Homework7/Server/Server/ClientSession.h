@@ -16,12 +16,6 @@ public:
 
 	bool PostAccept();
 	void AcceptCompletion();
-	
-	template <class PKT_TYPE>
-	bool ParsePacket(PKT_TYPE& pkt)
-	{
-		return mRecvBuffer.Read((char*)&pkt, pkt.mSize);
-	}
 
 	virtual void OnRead(size_t len);
 	virtual void OnDisconnect(DisconnectReason dr);

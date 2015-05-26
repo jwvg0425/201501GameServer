@@ -68,6 +68,8 @@ void Player::ResponseLoad(int pid, float x, float y, float z, bool valid, wchar_
 	outPacket.set_playername(strName);
 	mIsLogin = true;
 
+	//load 성공하면 이 플레이어로 재접속은 불가능하게
+	RequestUpdateValidation(false);
 	mSession->PostSend(PKT_SC_LOGIN, outPacket);
 }
 
