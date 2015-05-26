@@ -47,9 +47,8 @@ protected:
 	volatile long	mRefCount;
 	volatile long	mConnected;
 
-	bool			mIsRequest = false;
-
 };
 
 
 extern __declspec(thread) std::deque<Session*>* LSendRequestSessionList;
+extern __declspec(thread) std::deque<Session*>* LSendRequestFailedList;

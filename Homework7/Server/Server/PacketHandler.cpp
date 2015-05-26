@@ -148,3 +148,24 @@ REGISTER_HANDLER(PKT_CS_CHAT)
 	GBroadcastManager->BroadcastPacketInRange(PKT_SC_CHAT, outPacket,
 		session->mPlayer->GetX(), session->mPlayer->GetY(), session->mPlayer->GetZ(), 50.0f);
 }
+
+REGISTER_HANDLER(PKT_CS_LOGOUT)
+{
+	LogoutRequest inPacket;
+
+	if (false == inPacket.ParseFromCodedStream(&payloadStream))
+	{
+		LoggerUtil::EventLog("packet parsing error", PKT_CS_LOGOUT);
+		return;
+	}
+
+	if (inPacket.playerid() != session->mPlayer->GetPlayerId())
+	{
+		LoggerUtil::EventLog("PKT_CS_LOGOUT : invalid player ID", session->mPlayer->GetPlayerId());
+		return;
+	}
+
+	LogoutResult outPacket;
+	outPacket.set_playerid(session->mPlayer->GetPlayerId());
+	session->PostSend(PKT_SC_LOGOUT, outPacket);
+}

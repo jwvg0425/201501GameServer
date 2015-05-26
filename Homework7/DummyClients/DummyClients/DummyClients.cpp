@@ -30,12 +30,12 @@ int main(int argc, char* argv[])
 	LThreadType = THREAD_MAIN;
 
 	MAX_CONNECTION = 10;
-	strcpy_s(CONNECT_ADDR, "127.0.0.1");
-	CONNECT_PORT = 9991;
+	strcpy_s(CONNECT_ADDR, "10.73.44.30");
+	CONNECT_PORT = 41026;
 
 	if ( argc < 2 )
 	{
-		printf_s("Usage Example: DummyClients --ip 127.0.0.1 --port 9991 --session 100\n");
+		printf_s("Usage Example: DummyClients --ip 10.73.44.30 --port 41026 --session 100\n");
 	}
 	else
 	{

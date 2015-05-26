@@ -144,12 +144,19 @@ void IOThread::DoSendJob()
 	while (!LSendRequestSessionList->empty())
 	{
 		auto session = LSendRequestSessionList->front();
+		LSendRequestSessionList->pop_front();
 		
-		if (session->FlushSend())
+		if (!session->FlushSend())
 		{
-			LSendRequestSessionList->pop_front();
+			LSendRequestFailedList->push_front(session);
 		}
 	}
+
+	std::deque<Session*>* tmp;
+
+	tmp = LSendRequestSessionList;
+	LSendRequestSessionList = LSendRequestFailedList;
+	LSendRequestFailedList = tmp;
 }
 
 void IOThread::DoTimerJob()

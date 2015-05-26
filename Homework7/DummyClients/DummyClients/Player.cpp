@@ -26,6 +26,7 @@ void Player::PlayerReset()
 	mPlayerId = -1;
 	mIsValid = false;
 	mPosX = mPosY = mPosZ = 0;
+	mChatNum = 0;
 }
 
 using namespace MyPacket;
@@ -35,7 +36,7 @@ void Player::OnTick()
 	if (!IsValid())
 		return;
 
-	if (rand() % 20 == 0)
+	if (rand() % 2 == 0)
 	{
 		Chat();
 	}
@@ -57,6 +58,15 @@ void Player::Move()
 	xRate = rand() % 10000;
 	yRate = rand() % (10000 - xRate);
 	zRate = rand() % (10000 - xRate - yRate);
+
+	if (rand() % 2)
+		xRate = -xRate;
+
+	if (rand() % 2)
+		yRate = -yRate;
+
+	if (rand() % 2)
+		zRate = -zRate;
 
 	mPosX = mPosX + speed*xRate*0.0001f;
 	mPosY = mPosY + speed*yRate*0.0001f;
@@ -94,4 +104,17 @@ void Player::Chat()
 	}
 
 	mSession->SendRequest(MyPacket::PKT_CS_CHAT, chatRequest);
+}
+
+void Player::IncreaseChatNum()
+{
+	InterlockedIncrement(&mChatNum);
+
+	if (mChatNum > 100)
+	{
+		MyPacket::LogoutRequest logoutRequest;
+		logoutRequest.set_playerid(mPlayerId);
+
+		mSession->SendRequest(MyPacket::PKT_CS_LOGOUT, logoutRequest);
+	}
 }

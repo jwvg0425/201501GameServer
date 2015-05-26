@@ -53,6 +53,7 @@ private:
 	bool	mIsValid;
 	std::wstring	mPlayerName;
 	std::wstring	mComment;
+	bool	mIsLogin;
 
 	ClientSession* const mSession;
 	friend class ClientSession;

@@ -12,6 +12,7 @@
 
 
 __declspec(thread) std::deque<Session*>* LSendRequestSessionList = nullptr;
+__declspec(thread) std::deque<Session*>* LSendRequestFailedList = nullptr;
 
 Session::Session(size_t sendBufSize, size_t recvBufSize) 
 : mSendBufferLock(LO_LUGGAGE_CLASS), mSendBuffer(sendBufSize), mRecvBuffer(recvBufSize), mConnected(0), mRefCount(0), mSendPendingCount(0)
@@ -130,12 +131,7 @@ bool Session::PostSend(short packetType, const protobuf::MessageLite& payload)
 
 
 	/// flush later...
-	//하나만 넣기
-	if (!mIsRequest)
-	{
-		mIsRequest = true;
-		LSendRequestSessionList->push_back(this);
-	}
+	LSendRequestSessionList->push_back(this);
 
 	mSendBuffer.Commit(totalSize);
 
@@ -161,10 +157,7 @@ bool Session::FlushSend()
 	{
 		/// 보낼 데이터도 없는 경우
 		if (0 == mSendPendingCount)
-		{
-			mIsRequest = false;
 			return true;
-		}
 		
 		return false;
 	}
@@ -197,11 +190,7 @@ bool Session::FlushSend()
 
 	mSendPendingCount++;
 
-	if (mSendPendingCount == 1)
-	{
-		mIsRequest = false;
-		return true;
-	}
+	return mSendPendingCount == 1;
 
 	return false;
 }

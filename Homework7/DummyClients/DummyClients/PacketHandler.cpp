@@ -137,4 +137,20 @@ REGISTER_HANDLER(PKT_SC_CHAT)
 	}
 
 	printf_s("player [%s] says [%s]\n", chatResult.playername().c_str(), chatResult.playermessage().c_str());
+	session->GetPlayer()->IncreaseChatNum();
+}
+
+REGISTER_HANDLER(PKT_SC_LOGOUT)
+{
+	LogoutResult logoutResult;
+
+	if (false == logoutResult.ParseFromCodedStream(&payloadStream))
+	{
+		session->DisconnectRequest(DR_ACTIVE);
+		return;
+	}
+
+	printf_s("player [%d] logout\n", logoutResult.playerid());
+
+	session->DisconnectRequest(DR_LOGOUT);
 }

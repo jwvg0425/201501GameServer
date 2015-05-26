@@ -35,6 +35,8 @@ public:
 	void Move();
 	void Chat();
 
+	void IncreaseChatNum();
+
 private:
 
 	void PlayerReset();
@@ -50,6 +52,7 @@ private:
 	float	mPosY;
 	float	mPosZ;
 	bool	mIsValid;
+	unsigned long long mChatNum;
 	std::string	mPlayerName;
 	std::string	mComment;
 

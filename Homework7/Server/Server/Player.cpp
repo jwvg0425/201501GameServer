@@ -27,6 +27,7 @@ void Player::PlayerReset()
 	mComment = L"";
 	mPlayerId = -1;
 	mIsValid = false;
+	mIsLogin = false;
 	mPosX = mPosY = mPosZ = 0;
 }
 
@@ -65,6 +66,7 @@ void Player::ResponseLoad(int pid, float x, float y, float z, bool valid, wchar_
 	strName.assign(mPlayerName.begin(), mPlayerName.end());
 
 	outPacket.set_playername(strName);
+	mIsLogin = true;
 
 	mSession->PostSend(PKT_SC_LOGIN, outPacket);
 }

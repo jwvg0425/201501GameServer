@@ -8,6 +8,7 @@
 #include "IocpManager.h"
 
 __declspec(thread) std::deque<Session*>* LSendRequestSessionList = nullptr;
+__declspec(thread) std::deque<Session*>* LSendRequestFailedList = nullptr;
 
 Session::Session(size_t sendBufSize, size_t recvBufSize) 
 : mSendBuffer(sendBufSize), mRecvBuffer(recvBufSize), mConnected(0), mRefCount(0), mSendPendingCount(0)
@@ -248,4 +249,3 @@ void Session::EchoBack()
 	mRecvBuffer.Remove(len);
 
 }
-

@@ -168,6 +168,7 @@ unsigned int WINAPI IocpManager::IoWorkerThread(LPVOID lpParam)
 	LThreadType = THREAD_IO_WORKER;
 	LWorkerThreadId = reinterpret_cast<int>(lpParam);
 	LSendRequestSessionList = new std::deque<Session*>;
+	LSendRequestFailedList = new std::deque<Session*>;
 	LTimer = new Timer;
 	LLockOrderChecker = new LockOrderChecker(LWorkerThreadId);
 

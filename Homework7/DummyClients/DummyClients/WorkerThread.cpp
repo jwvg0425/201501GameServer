@@ -130,16 +130,22 @@ void WorkerThread::DoSendJob()
 {
 	while (!LSendRequestSessionList->empty())
 	{
-		auto& session = LSendRequestSessionList->front();
-	
-		if (session->FlushSend())
+		auto session = LSendRequestSessionList->front();
+		LSendRequestSessionList->pop_front();
+
+		if (!session->FlushSend())
 		{
-			/// true 리턴 되면 빼버린다.
-			LSendRequestSessionList->pop_front();
+			LSendRequestFailedList->push_front(session);
 		}
 	}
-	
+
+	std::deque<Session*>* tmp;
+
+	tmp = LSendRequestSessionList;
+	LSendRequestSessionList = LSendRequestFailedList;
+	LSendRequestFailedList = tmp;
 }
+
 
 void WorkerThread::DoTimerJob()
 {
